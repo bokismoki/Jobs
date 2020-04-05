@@ -1,9 +1,9 @@
 <template>
   <nav
-    class="navigation bg-vgreen shadow-md flex justify-between items-center p-5 md:fixed md:left-0 md:h-screen md:w-1/3 md:max-w-xxs md:flex-col md:items-stretch md:justify-center"
+    class="navigation bg-vgreen shadow-md flex justify-between items-center p-5 md:fixed md:left-0 md:h-screen sm:px-10 md:px-5 md:w-1/3 md:pt-10 md:max-w-xxs md:flex-col md:items-stretch md:justify-start"
   >
     <Logo />
-    <div class="hidden md:block">
+    <div class="hidden md:block md:h-full">
       <NavList />
     </div>
     <button @click="toggleBurgerNav" class="md:hidden">

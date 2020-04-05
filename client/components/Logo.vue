@@ -1,8 +1,8 @@
 <template>
   <nuxt-link :to="{name: 'index'}" class="logo flex items-end">
-    <Jhook class="w-8 h-8 md:w-10 md:h-10" fill="#fff" />
+    <Jhook class="w-8 h-8 md:w-10 md:h-10 xl:w-12 xl:h-12" fill="#34495e" />
     <h1
-      class="text-white font-semibold text-2xl tracking-wide uppercase leading-none -ml-1"
+      class="text-white font-semibold text-2xl tracking-wide uppercase leading-none -ml-1 xl:text-3xl"
     >obs Pool</h1>
   </nuxt-link>
 </template>

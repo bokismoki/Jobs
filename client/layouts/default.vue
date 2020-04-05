@@ -34,6 +34,7 @@ export default {
 *::after {
   @apply m-0 p-0;
   box-sizing: border-box;
+  outline: none;
 }
 
 body {
@@ -42,6 +43,7 @@ body {
 
 @media (min-width: 768px) {
   .view {
+    @apply min-h-screen w-full;
     margin-left: 256px;
   }
 }
