@@ -5,7 +5,17 @@
 ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 */
 module.exports = {
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        'vgreen': '#41b883',
+        'vblue': '#34495e'
+      },
+      maxWidth: {
+        'xxs': '16rem'
+      }
+    }
+  },
   variants: {},
   plugins: []
 }
