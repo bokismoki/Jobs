@@ -85,6 +85,10 @@
       class="bg-vgreen text-white px-5 py-2 rounded-sm mt-5 uppercase text-sm font-bold tracking-wider"
       type="submit"
     >Register</button>
+    <nuxt-link class="text-xs block mt-1 text-white opacity-75" :to="{name: 'signin'}">
+      Already have an account?
+      <span class="text-vgreen">Login</span>
+    </nuxt-link>
   </form>
 </template>
 
