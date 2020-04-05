@@ -30,12 +30,18 @@
     >
       <nuxt-link :to="{name: 'contact'}" class="block">Contact</nuxt-link>
     </li>
+    <li class="text-white md:ml-2">
+      <button @click="logout" class="uppercase bg-vblue px-2 py-1 rounded-sm">Logout</button>
+    </li>
   </ul>
 </template>
 
 <script>
 export default {
-  name: 'NavList'
+  name: 'NavList',
+  methods: {
+    logout() {}
+  }
 }
 </script>
 
