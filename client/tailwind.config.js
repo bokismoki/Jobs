@@ -11,6 +11,9 @@ module.exports = {
         'vgreen': '#41b883',
         'vblue': '#34495e'
       },
+      spacing: {
+        '13': '3.25rem'
+      },
       maxWidth: {
         'xxs': '16rem'
       }
