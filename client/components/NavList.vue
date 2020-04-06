@@ -10,18 +10,21 @@
       <li
         class="uppercase text-lg mb-2 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200"
         :class="{'bg-vgreen': $route.name === 'signup'}"
+        v-if="!loggedIn"
       >
         <nuxt-link :to="{name: 'signup'}" class="block">Sign Up</nuxt-link>
       </li>
       <li
         class="uppercase text-lg mb-2 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200"
         :class="{'bg-vgreen': $route.name === 'signin'}"
+        v-if="!loggedIn"
       >
         <nuxt-link :to="{name: 'signin'}" class="block">Sign In</nuxt-link>
       </li>
       <li
         class="uppercase text-lg mb-2 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200"
         :class="{'bg-vgreen': $route.name === 'dashboard'}"
+        v-if="admin"
       >
         <nuxt-link :to="{name: 'dashboard'}" class="block">Dashboard</nuxt-link>
       </li>
@@ -38,17 +41,26 @@
         <nuxt-link :to="{name: 'contact'}" class="block">Contact</nuxt-link>
       </li>
     </div>
-    <li class="text-white md:ml-2">
+    <li v-if="loggedIn" class="text-white md:ml-2">
       <button @click="logout" class="uppercase bg-vblue py-2 rounded-sm w-full">Logout</button>
     </li>
   </ul>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'NavList',
   methods: {
-    logout() {}
+    logout() {
+      this.$store.dispatch('logout')
+      this.$store.dispatch('setBurgerNavOpen', false)
+      localStorage.removeItem('jwtToken')
+    }
+  },
+  computed: {
+    ...mapGetters(['loggedIn', 'admin'])
   }
 }
 </script>

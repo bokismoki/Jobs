@@ -63,10 +63,16 @@ export default {
           }
         })
         .then(response => {
-          if (response.status === 200) {
-            localStorage.setItem('jwtToken', response.data.jwtToken)
+          const { status, data } = response
+          if (status === 200) {
+            localStorage.setItem('jwtToken', data.jwtToken)
+            this.$store.dispatch('login', {
+              id: data.id,
+              admin: data.admin,
+              loggedIn: true
+            })
+            this.$router.push({ name: 'index' })
           }
-          console.log(response.data)
         })
         .catch(err => {
           console.error(err)
