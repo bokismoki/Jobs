@@ -114,7 +114,23 @@ export default {
     }
   },
   methods: {
-    register() {}
+    register() {
+      this.$axios
+        .post('/company/signup', this.company, {
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.status === 201) {
+            this.$router.push({ name: 'signin' })
+          }
+        })
+        .catch(err => {
+          console.error(err)
+          console.error(err.response)
+        })
+    }
   }
 }
 </script>
