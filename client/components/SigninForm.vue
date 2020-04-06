@@ -55,7 +55,24 @@ export default {
     }
   },
   methods: {
-    login() {}
+    login() {
+      this.$axios
+        .post('/company/login', this.company, {
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.status === 200) {
+            localStorage.setItem('jwtToken', response.data.jwtToken)
+          }
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.error(err)
+          console.error(err.response)
+        })
+    }
   }
 }
 </script>

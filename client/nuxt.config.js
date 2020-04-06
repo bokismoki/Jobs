@@ -5,7 +5,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    titleTemplate: 'JobsPool - %s',
+    titleTemplate: 'Jobs Pool - %s',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -2,7 +2,10 @@ import { EntityRepository, Repository } from "typeorm"
 import { Company } from "./company.entity"
 import { CreateCompanyDto } from "./dto/create-company.dto"
 import * as bcrypt from 'bcrypt'
-import { ConflictException, InternalServerErrorException } from "@nestjs/common"
+import { ConflictException, InternalServerErrorException, UnauthorizedException } from "@nestjs/common"
+import { LoginDto } from "./dto/login.dto"
+import { JwtPayload } from 'passport-jwt'
+import { JwtService } from '@nestjs/jwt'
 
 @EntityRepository(Company)
 export class CompanyRepository extends Repository<Company> {
@@ -21,12 +24,22 @@ export class CompanyRepository extends Repository<Company> {
         try {
             await company.save()
         } catch (err) {
-            if(err.sqlState === '23000') {
+            if (err.sqlState === '23000') {
                 throw new ConflictException('Error bro')
             } else {
-                throw new InternalServerErrorException()
+                throw new InternalServerErrorException('Error while registering a new account')
             }
-            console.log('ERRRRRR', err)
+        }
+    }
+
+    async validateUserPassword(loginDto: LoginDto): Promise<{ id: number, admin: boolean }> {
+        const { email, password } = loginDto
+        const user = await this.findOne({ email })
+
+        if (user && await bcrypt.compare(password, user.password)) {
+            return { id: user.id, admin: user.admin }
+        } else {
+            throw new UnauthorizedException('Invalid credentials')
         }
     }
 
