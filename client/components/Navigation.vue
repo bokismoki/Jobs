@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     toggleBurgerNav() {
-      this.$store.dispatch('setBurgerNavSlide', !this.burgerNavOpen)
+      this.$store.dispatch('setBurgerNavOpen', !this.burgerNavOpen)
     }
   },
   computed: {

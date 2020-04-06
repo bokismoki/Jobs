@@ -7,13 +7,13 @@ export const getters = {
 }
 
 export const mutations = {
-    SET_BURGER_NAV_SLIDE: (state, payload) => {
+    SET_BURGER_NAV_OPEN: (state, payload) => {
         state.burgerNavOpen = payload
     }
 }
 
 export const actions = {
-    setBurgerNavSlide: ({ commit }, payload) => {
-        commit('SET_BURGER_NAV_SLIDE', payload)
+    setBurgerNavOpen: ({ commit }, payload) => {
+        commit('SET_BURGER_NAV_OPEN', payload)
     }
 }
