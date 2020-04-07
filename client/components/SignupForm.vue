@@ -30,6 +30,19 @@
       />
     </div>
     <div class="mt-3">
+      <label class="block mb-1 text-white text-sm font-semibold" for="comp-site">
+        Company site:
+        <StarHighlight />
+      </label>
+      <input
+        class="rounded-sm px-2 py-1 w-full placeholder-vblue"
+        id="comp-site"
+        type="text"
+        placeholder="company site"
+        v-model="company.site"
+      />
+    </div>
+    <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-location">
         Company location:
         <StarHighlight />
@@ -106,6 +119,7 @@ export default {
       company: {
         name: '',
         email: '',
+        site: '',
         location: '',
         size: 'MD',
         password: '',

@@ -12,6 +12,12 @@ export class CreateCompanyDto {
     email: string
 
     @IsString()
+    @Matches(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/, {
+        message: 'Please enter a valid site url'
+    })
+    site: string
+
+    @IsString()
     @MinLength(2)
     @MaxLength(25)
     location: string

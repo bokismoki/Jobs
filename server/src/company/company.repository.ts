@@ -10,11 +10,12 @@ import { JwtService } from '@nestjs/jwt'
 @EntityRepository(Company)
 export class CompanyRepository extends Repository<Company> {
     async createCompany(createCompanyDto: CreateCompanyDto): Promise<void> {
-        const { name, email, location, size, password } = createCompanyDto
+        const { name, email, site, location, size, password } = createCompanyDto
 
         const company = new Company()
         company.name = name
         company.email = email
+        company.site = site
         company.location = location
         if (size) {
             company.size = size
@@ -25,7 +26,7 @@ export class CompanyRepository extends Repository<Company> {
             await company.save()
         } catch (err) {
             if (err.sqlState === '23000') {
-                throw new ConflictException('Error bro')
+                throw new ConflictException('There is a company registered with your email already')
             } else {
                 throw new InternalServerErrorException('Error while registering a new account')
             }
