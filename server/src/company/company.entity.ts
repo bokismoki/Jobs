@@ -32,5 +32,5 @@ export class Company extends BaseEntity {
     created_at: string
 
     @OneToMany(type => Job, job => job.company)
-    jobs: Job
+    jobs: Job[]
 }
