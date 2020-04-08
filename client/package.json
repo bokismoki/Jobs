@@ -13,7 +13,9 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "nuxt": "^2.0.0",
-    "nuxt-svg-loader": "^1.2.0"
+    "nuxt-svg-loader": "^1.2.0",
+    "swiper": "^5.3.6",
+    "vue-awesome-swiper": "^4.1.0"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^1.0.0",

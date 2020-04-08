@@ -12,10 +12,14 @@ module.exports = {
         'vblue': '#34495e'
       },
       spacing: {
-        '13': '3.25rem'
+        '13': '3.25rem',
+        '1.5': '0.35rem'
       },
       maxWidth: {
         'xxs': '16rem'
+      },
+      opacity: {
+        '85': '0.85'
       }
     }
   },
