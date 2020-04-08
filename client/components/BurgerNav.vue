@@ -1,5 +1,5 @@
 <template>
-  <nav class="burger-nav absolute w-full bg-white p-5">
+  <nav class="burger-nav absolute w-full bg-white p-5 z-50">
     <NavList />
   </nav>
 </template>

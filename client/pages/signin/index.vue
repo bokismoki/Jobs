@@ -1,5 +1,5 @@
 <template>
-  <div class="signin px-5 py-10 sm:px-10 md:py-13 md:px-20">
+  <div class="signin px-5 py-10 sm:px-10 md:py-13 md:px-10">
     <div class="lg:max-w-md xl:max-w-lg mx-auto">
       <h1 class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl">Sign In</h1>
       <h2 class="text-white font-semibold text-sm mt-5 xl:text-base">

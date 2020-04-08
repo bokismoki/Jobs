@@ -1,5 +1,5 @@
 <template>
-  <div class="contact px-5 py-10 sm:px-10 md:py-13 md:px-20">
+  <div class="contact px-5 py-10 sm:px-10 md:py-13 md:px-10">
     <div class="lg:max-w-md xl:max-w-xl mx-auto xl:text-center">
       <h1
         class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl"

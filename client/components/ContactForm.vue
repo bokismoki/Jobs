@@ -1,6 +1,6 @@
 <template>
   <form
-    class="contact-form mt-10 max-w-sm mx-auto lg:max-w-md xl:max-w-lg xl:mx-0 xl:ml-auto"
+    class="contact-form mt-10 max-w-sm mx-auto lg:max-w-md xl:max-w-xl xl:mx-0 xl:ml-auto"
     @submit.prevent="sendMessage"
   >
     <div class="mt-3">

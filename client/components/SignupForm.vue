@@ -37,7 +37,7 @@
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
         id="comp-site"
-        type="text"
+        type="url"
         placeholder="company site"
         v-model="company.site"
       />
