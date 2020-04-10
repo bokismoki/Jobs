@@ -6,13 +6,9 @@
         Here you can
         <span class="text-vgreen">register</span> an account for your company.
       </h2>
-      <p class="text-white text-xs mt-1">
-        <StarHighlight />
-        <span class="opacity-75">
-          Please use the valid company details since they will be displayed on created job posts.
-          <br />( The email and the password will not be displayed )
-        </span>
-      </p>
+      <ImportantMessage
+        msg=" Please use the valid company details since they will be displayed on created job posts. ( The email and the password will not be displayed )"
+      />
     </div>
     <SignupForm />
   </div>
@@ -24,9 +20,9 @@ export default {
     title: 'Sign Up'
   },
   components: {
-    StarHighlight: () =>
+    ImportantMessage: () =>
       import(
-        /*webpackChunkName: 'star-highlight'*/ '~/components/StarHighlight'
+        /*webpackChunkName: 'important-message'*/ '~/components/ImportantMessage'
       ),
     SignupForm: () =>
       import(/*webpackChunkName: 'signup-form'*/ '~/components/SignupForm')

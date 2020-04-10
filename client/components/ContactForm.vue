@@ -6,7 +6,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="contact-first-name">
         Tell us your name:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -25,7 +25,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="contact-email">
         Email:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -48,7 +48,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="contact-message">
         Message:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <textarea
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -67,12 +67,6 @@
 <script>
 export default {
   name: 'ContactForm',
-  components: {
-    StarHighlight: () =>
-      import(
-        /*webpackChunkName: 'star-highlight'*/ '~/components/StarHighlight'
-      )
-  },
   data() {
     return {
       contact: {

@@ -6,7 +6,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-name">
         Company name:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -19,7 +19,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-email">
         Company email:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -32,7 +32,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-site">
         Company site:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -45,20 +45,20 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-location">
         Company location:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
         id="comp-location"
         type="text"
-        placeholder="country and/or city name"
+        placeholder="E.g 'Belgrade, Serbia'"
         v-model="company.location"
       />
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-size">
         Company size:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
 
       <select class="p-1" id="comp-size" v-model="company.size">
@@ -71,7 +71,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="password">
         Password:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -84,7 +84,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="password-confirm">
         Confirm Password:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -108,12 +108,6 @@
 <script>
 export default {
   name: 'SignupForm',
-  components: {
-    StarHighlight: () =>
-      import(
-        /*webpackChunkName: 'star-highlight'*/ '~/components/StarHighlight'
-      )
-  },
   data() {
     return {
       company: {

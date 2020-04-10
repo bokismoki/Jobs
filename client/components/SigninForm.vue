@@ -3,7 +3,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-email">
         Email:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -16,7 +16,7 @@
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="password">
         Password:
-        <StarHighlight />
+        <span class="text-vgreen font-black">*</span>
       </label>
       <input
         class="rounded-sm px-2 py-1 w-full placeholder-vblue"
@@ -40,12 +40,6 @@
 <script>
 export default {
   name: 'SigninForm',
-  components: {
-    StarHighlight: () =>
-      import(
-        /*webpackChunkName: 'star-highlight'*/ '~/components/StarHighlight'
-      )
-  },
   data() {
     return {
       company: {
