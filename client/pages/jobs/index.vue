@@ -4,7 +4,7 @@
       class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl xl:text-center"
     >Search for job offers</h1>
     <Filters class="mt-10" />
-    <div class="grid mx-auto">
+    <div class="dgrid mx-auto lg:grid lg:content-center lg:grid-cols-2 lg:mt-5">
       <JobItem v-for="job in filteredJobs" :key="job.id" :job="job" />
     </div>
     <button
@@ -71,10 +71,7 @@ export default {
 
 <style scoped>
 @media (min-width: 1024px) {
-  .grid {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(2, 1fr);
+  .dgrid {
     max-width: 950px;
   }
 }
