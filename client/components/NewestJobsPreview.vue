@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style scoped>
+.client-only-placeholder {
+  @apply text-white text-lg;
+}
 .swiper {
   height: 300px;
 }

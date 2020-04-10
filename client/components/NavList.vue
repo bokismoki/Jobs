@@ -35,6 +35,13 @@
         <nuxt-link :to="{name: 'jobs'}" class="block">Jobs</nuxt-link>
       </li>
       <li
+        v-if="loggedIn"
+        class="uppercase text-sm pl-8 mb-2 -mt-3 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200 md:-mt-6"
+        :class="{'bg-vgreen': $route.name === 'jobs-create'}"
+      >
+        <nuxt-link :to="{name: 'jobs-create'}" class="block">Create</nuxt-link>
+      </li>
+      <li
         class="uppercase text-lg mb-2 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200"
         :class="{'bg-vgreen': $route.name === 'contact'}"
       >

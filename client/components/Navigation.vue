@@ -8,7 +8,7 @@
     </div>
     <button @click="toggleBurgerNav" class="md:hidden">
       <Burger v-if="!burgerNavOpen" class="w-8 h-8" />
-      <Exit v-else class="w-8 h-8" />
+      <Exit fill="#fff" v-else class="w-8 h-8" />
     </button>
   </nav>
 </template>
