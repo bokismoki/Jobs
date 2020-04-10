@@ -12,8 +12,9 @@ module.exports = {
         'vblue': '#34495e'
       },
       spacing: {
+        '1.5': '0.35rem',
         '13': '3.25rem',
-        '1.5': '0.35rem'
+        '17': '4.25rem'
       },
       maxWidth: {
         'xxs': '16rem'

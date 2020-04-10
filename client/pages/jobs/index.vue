@@ -1,0 +1,81 @@
+<template>
+  <div class="jobs px-5 py-10 sm:px-10 md:py-13 md:px-10 leading-snug">
+    <h1
+      class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl xl:text-center"
+    >Search for job offers</h1>
+    <Filters class="mt-10" />
+    <div class="grid mx-auto">
+      <JobItem v-for="job in filteredJobs" :key="job.id" :job="job" />
+    </div>
+    <button
+      class="bg-vgreen text-white px-5 py-2 rounded-sm mt-10 uppercase text-sm table mx-auto font-bold tracking-wider xl:text-lg"
+      :class="{'opacity-75': nothingToLoad}"
+      :disabled="nothingToLoad"
+      @click="loadMore"
+    >{{loading ? 'Loading...' : 'Load more...'}}</button>
+    <p
+      class="text-white text-center mt-3 uppercase tracking-wide font-semibold transition-opacity duration-500"
+      :class="{'opacity-0 cursor-default': !nothingToLoadP}"
+    >There are no jobs to be loaded</p>
+  </div>
+</template>
+
+<!-- <nuxt-link v-if="loggedIn" :to="{name: 'jobs-create'}">Create New Job Post</nuxt-link> -->
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  head: {
+    title: 'Jobs'
+  },
+  components: {
+    JobItem: () =>
+      import(/*webpackChunkName: 'job-item'*/ '~/components/JobItem'),
+    Filters: () =>
+      import(/*webpackChunkName: 'filters'*/ '~/components/Filters')
+  },
+  data() {
+    return {
+      skip: 1,
+      loading: false,
+      nothingToLoad: false,
+      nothingToLoadP: false
+    }
+  },
+  methods: {
+    async loadMore() {
+      this.loading = true
+      const jobs = await this.$axios.get(`/job?skip=${this.skip}`)
+      const { data } = jobs
+      if (data.length) {
+        this.$store.dispatch('addJobs', data)
+        this.skip++
+      } else {
+        this.nothingToLoad = true
+        this.nothingToLoadP = true
+        setTimeout(() => {
+          this.nothingToLoadP = false
+        }, 5000)
+      }
+      this.loading = false
+    }
+  },
+  computed: {
+    ...mapGetters(['loggedIn', 'filteredJobs'])
+  },
+  created() {
+    this.$store.dispatch('setFilter', '')
+  }
+}
+</script>
+
+<style scoped>
+@media (min-width: 1024px) {
+  .grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 950px;
+  }
+}
+</style>

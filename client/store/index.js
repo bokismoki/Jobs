@@ -5,7 +5,8 @@ export const state = () => ({
         admin: false,
         loggedIn: false
     },
-    jobs: []
+    jobs: [],
+    filter: ''
 })
 
 export const getters = {
@@ -13,7 +14,15 @@ export const getters = {
     loggedIn: state => state.account.loggedIn,
     admin: state => state.account.admin,
     accountId: state => state.account.id,
-    jobs: state => state.jobs
+    jobs: state => state.jobs,
+    filteredJobs: state => {
+        return state.jobs.filter(job => {
+            return job.title.toLowerCase().includes(state.filter.toLowerCase()) ||
+                job.description.toLowerCase().includes(state.filter.toLowerCase()) ||
+                job.company.location.toLowerCase().includes(state.filter.toLowerCase()) ||
+                job.company.name.toLowerCase().includes(state.filter.toLowerCase())
+        })
+    }
 }
 
 export const mutations = {
@@ -30,6 +39,14 @@ export const mutations = {
     },
     SET_JOBS: (state, payload) => {
         state.jobs = payload
+    },
+    ADD_JOBS: (state, payload) => {
+        payload.forEach(job => {
+            state.jobs.push(job)
+        })
+    },
+    SET_FILTER: (state, payload) => {
+        state.filter = payload
     }
 }
 
@@ -49,5 +66,11 @@ export const actions = {
     },
     setJobs: ({ commit }, payload) => {
         commit('SET_JOBS', payload)
+    },
+    addJobs: ({ commit }, payload) => {
+        commit('ADD_JOBS', payload)
+    },
+    setFilter: ({ commit }, payload) => {
+        commit('SET_FILTER', payload)
     }
 }

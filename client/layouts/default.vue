@@ -41,6 +41,11 @@ body {
   @apply bg-vblue;
 }
 
+h1,
+h2 {
+  font-family: 'Roboto', sans-serif;
+}
+
 @media (min-width: 768px) {
   .view {
     @apply min-h-screen w-full;
