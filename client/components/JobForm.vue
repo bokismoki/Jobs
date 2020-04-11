@@ -1,5 +1,9 @@
 <template>
   <form class="job-form mt-10 max-w-sm mx-auto lg:max-w-md xl:max-w-lg" @submit.prevent="upload">
+    <div
+      class="text-red-600 mb-5 font-semibold"
+      v-if="hasErrors"
+    >Make sure all required fields are filled in correctly.</div>
     <div>
       <label class="block mb-1 text-white text-sm font-semibold" for="job-title">
         Job title:
@@ -15,6 +19,10 @@
         placeholder="E.g 'Junior frontend developer - MEVN stack - USA'"
         v-model="job.title"
       />
+      <div
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.job.title.maxLength"
+      >Maximum characters allowed: {{$v.job.title.$params.maxLength.max}}</div>
     </div>
     <div class="mt-5">
       <label class="block mb-1 text-white text-sm font-semibold" for="job-link">
@@ -31,6 +39,14 @@
         placeholder="job post url"
         v-model="job.job_link"
       />
+      <div
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.job.job_link.url"
+      >Please enter a valid url</div>
+      <div
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.job.job_link.maxLength"
+      >Maximum characters allowed: {{$v.job.job_link.$params.maxLength.max}}</div>
     </div>
     <div class="mt-5">
       <label class="block mb-1 text-white text-sm font-semibold" for="job-desc">
@@ -46,6 +62,10 @@
         v-model="job.description"
         placeholder="job description"
       ></textarea>
+      <div
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.job.description.maxLength"
+      >Maximum characters allowed: {{$v.job.description.$params.maxLength.max}}</div>
     </div>
     <input class="hidden" type="file" id="file" @change="processFile" />
     <label
@@ -68,6 +88,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { required, maxLength, url } from 'vuelidate/lib/validators'
 
 export default {
   name: 'JobForm',
@@ -88,6 +109,29 @@ export default {
         title: '',
         job_link: '',
         description: ''
+      },
+      hasErrors: false
+    }
+  },
+  validations: {
+    job: {
+      title: {
+        required,
+        maxLength: maxLength(50)
+      },
+      job_link: {
+        required,
+        url,
+        maxLength: maxLength(255)
+      },
+      description: {
+        required,
+        maxLength: 255
+      },
+      image: {
+        src: {
+          required
+        }
       }
     }
   },
@@ -115,31 +159,46 @@ export default {
       this.job.image.file = file
     },
     upload() {
-      const fd = new FormData()
-      fd.append('image', this.job.image.file, this.job.image.file.name)
-      fd.append('title', this.job.title)
-      fd.append('job_link', this.job.job_link)
-      fd.append('description', this.job.description)
-      fd.append('companyId', this.accountId)
-      this.$axios
-        .post('/job', fd, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
-        .then(async response => {
-          if (response.status === 201) {
-            this.$router.push({ name: 'jobs' })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-          console.error(err.response)
-        })
+      this.$v.job.$touch()
+      if (this.$v.job.$anyError) {
+        this.hasErrors = true
+      } else {
+        const fd = new FormData()
+        fd.append('image', this.job.image.file, this.job.image.file.name)
+        fd.append('title', this.job.title)
+        fd.append('job_link', this.job.job_link)
+        fd.append('description', this.job.description)
+        fd.append('companyId', this.accountId)
+        this.$axios
+          .post('/job', fd, {
+            headers: {
+              'content-type': 'multipart/form-data'
+            }
+          })
+          .then(async response => {
+            if (response.status === 201) {
+              this.$router.push({ name: 'jobs' })
+            }
+          })
+          .catch(err => {
+            console.error(err)
+            console.error(err.response)
+          })
+      }
     }
   },
   computed: {
     ...mapGetters(['accountId'])
+  },
+  watch: {
+    job: {
+      deep: true,
+      handler() {
+        if (this.hasErrors) {
+          this.hasErrors = false
+        }
+      }
+    }
   }
 }
 </script>
