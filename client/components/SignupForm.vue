@@ -3,6 +3,10 @@
     class="signup-form mt-10 max-w-sm mx-auto lg:max-w-md xl:max-w-lg"
     @submit.prevent="register"
   >
+    <div
+      class="text-red-600"
+      v-if="hasErrors"
+    >Make sure all required fields are filled in correctly.</div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-name">
         Company name:
@@ -15,6 +19,10 @@
         placeholder="company name"
         v-model="company.name"
       />
+      <div
+        class="error text-xs text-red-600"
+        v-if="!$v.company.name.maxLength"
+      >Maximum characters allowed: {{$v.company.name.$params.maxLength.max}}</div>
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-email">
@@ -28,7 +36,15 @@
         placeholder="company email"
         v-model="company.email"
       />
+      <div
+        class="error text-xs text-red-600"
+        v-if="!$v.company.email.email"
+      >Please enter a valid email</div>
     </div>
+    <div
+      class="error text-xs text-red-600"
+      v-if="!$v.company.email.maxLength"
+    >Maximum characters allowed: {{$v.company.email.$params.maxLength.max}}</div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-site">
         Company site:
@@ -41,6 +57,11 @@
         placeholder="company site"
         v-model="company.site"
       />
+      <div class="error text-xs text-red-600" v-if="!$v.company.site.url">Please enter a valid url</div>
+      <div
+        class="error text-xs text-red-600"
+        v-if="!$v.company.site.maxLength"
+      >Maximum characters allowed: {{$v.company.site.$params.maxLength.max}}</div>
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-location">
@@ -54,6 +75,10 @@
         placeholder="E.g 'Belgrade, Serbia'"
         v-model="company.location"
       />
+      <div
+        class="error text-xs text-red-600"
+        v-if="!$v.company.location.maxLength"
+      >Maximum characters allowed: {{$v.company.location.$params.maxLength.max}}</div>
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="comp-size">
@@ -80,6 +105,10 @@
         placeholder="password"
         v-model="company.password"
       />
+      <div
+        class="error text-xs text-red-600"
+        v-if="!$v.company.password.maxLength"
+      >Maximum characters allowed: {{$v.company.password.$params.maxLength.max}}</div>
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="password-confirm">
@@ -93,6 +122,10 @@
         placeholder="confirm password"
         v-model="company.confirmPassword"
       />
+      <div
+        class="error text-xs text-red-600"
+        v-if="!$v.company.confirmPassword.sameAsPassword && company.confirmPassword"
+      >Passwords do not match</div>
     </div>
     <button
       class="bg-vgreen text-white px-5 py-2 rounded-sm mt-5 uppercase text-sm font-bold tracking-wider"
@@ -106,6 +139,14 @@
 </template>
 
 <script>
+import {
+  required,
+  email,
+  url,
+  maxLength,
+  sameAs
+} from 'vuelidate/lib/validators'
+
 export default {
   name: 'SignupForm',
   data() {
@@ -118,26 +159,75 @@ export default {
         size: 'MD',
         password: '',
         confirmPassword: ''
+      },
+      hasErrors: false
+    }
+  },
+  validations: {
+    company: {
+      name: {
+        required,
+        maxLength: maxLength(100)
+      },
+      email: {
+        required,
+        email,
+        maxLength: maxLength(255)
+      },
+      site: {
+        required,
+        url,
+        maxLength: maxLength(255)
+      },
+      location: {
+        required,
+        maxLength: maxLength(25)
+      },
+      size: {
+        required
+      },
+      password: {
+        required,
+        maxLength: maxLength(255)
+      },
+      confirmPassword: {
+        required,
+        sameAsPassword: sameAs('password')
       }
     }
   },
   methods: {
     register() {
-      this.$axios
-        .post('/company/signup', this.company, {
-          headers: {
-            'content-type': 'application/json'
-          }
-        })
-        .then(response => {
-          if (response.status === 201) {
-            this.$router.push({ name: 'signin' })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-          console.error(err.response)
-        })
+      this.$v.company.$touch()
+      if (this.$v.company.$anyError) {
+        this.hasErrors = true
+      } else {
+        this.$axios
+          .post('/company/signup', this.company, {
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+          .then(response => {
+            if (response.status === 201) {
+              this.$router.push({ name: 'signin' })
+            }
+          })
+          .catch(err => {
+            console.error(err)
+            console.error(err.response)
+          })
+      }
+    }
+  },
+  watch: {
+    company: {
+      deep: true,
+      handler() {
+        if (this.hasErrors) {
+          this.hasErrors = false
+        }
+      }
     }
   }
 }
