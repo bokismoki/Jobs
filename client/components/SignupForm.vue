@@ -4,7 +4,7 @@
     @submit.prevent="register"
   >
     <div
-      class="text-red-600"
+      class="text-red-600 font-semibold"
       v-if="hasErrors"
     >Make sure all required fields are filled in correctly.</div>
     <div class="mt-3">
@@ -20,7 +20,7 @@
         v-model="company.name"
       />
       <div
-        class="error text-xs text-red-600"
+        class="error text-xs text-red-600 font-semibold"
         v-if="!$v.company.name.maxLength"
       >Maximum characters allowed: {{$v.company.name.$params.maxLength.max}}</div>
     </div>
@@ -37,12 +37,12 @@
         v-model="company.email"
       />
       <div
-        class="error text-xs text-red-600"
+        class="error text-xs text-red-600 font-semibold"
         v-if="!$v.company.email.email"
       >Please enter a valid email</div>
     </div>
     <div
-      class="error text-xs text-red-600"
+      class="error text-xs text-red-600 font-semibold"
       v-if="!$v.company.email.maxLength"
     >Maximum characters allowed: {{$v.company.email.$params.maxLength.max}}</div>
     <div class="mt-3">
@@ -57,9 +57,12 @@
         placeholder="company site"
         v-model="company.site"
       />
-      <div class="error text-xs text-red-600" v-if="!$v.company.site.url">Please enter a valid url</div>
       <div
-        class="error text-xs text-red-600"
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.company.site.url"
+      >Please enter a valid url</div>
+      <div
+        class="error text-xs text-red-600 font-semibold"
         v-if="!$v.company.site.maxLength"
       >Maximum characters allowed: {{$v.company.site.$params.maxLength.max}}</div>
     </div>
@@ -76,7 +79,7 @@
         v-model="company.location"
       />
       <div
-        class="error text-xs text-red-600"
+        class="error text-xs text-red-600 font-semibold"
         v-if="!$v.company.location.maxLength"
       >Maximum characters allowed: {{$v.company.location.$params.maxLength.max}}</div>
     </div>
@@ -106,9 +109,13 @@
         v-model="company.password"
       />
       <div
-        class="error text-xs text-red-600"
+        class="error text-xs text-red-600 font-semibold"
         v-if="!$v.company.password.maxLength"
       >Maximum characters allowed: {{$v.company.password.$params.maxLength.max}}</div>
+      <div
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.company.password.strongPassword && company.password"
+      >Minimum 8 characters needed, uppercase, symbols and numbers</div>
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="password-confirm">
@@ -123,7 +130,7 @@
         v-model="company.confirmPassword"
       />
       <div
-        class="error text-xs text-red-600"
+        class="error text-xs text-red-600 font-semibold"
         v-if="!$v.company.confirmPassword.sameAsPassword && company.confirmPassword"
       >Passwords do not match</div>
     </div>
@@ -144,8 +151,14 @@ import {
   email,
   url,
   maxLength,
-  sameAs
+  sameAs,
+  helpers
 } from 'vuelidate/lib/validators'
+
+const strongPassword = helpers.regex(
+  'strongPassword',
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+)
 
 export default {
   name: 'SignupForm',
@@ -188,7 +201,8 @@ export default {
       },
       password: {
         required,
-        maxLength: maxLength(255)
+        maxLength: maxLength(255),
+        strongPassword
       },
       confirmPassword: {
         required,
