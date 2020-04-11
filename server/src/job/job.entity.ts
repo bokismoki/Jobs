@@ -6,7 +6,7 @@ export class Job extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ length: 35 })
+    @Column({ length: 50 })
     title: string
 
     @Column()

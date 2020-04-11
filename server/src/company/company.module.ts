@@ -5,11 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyRepository } from './company.repository'
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CompanyRepository]),
+  ConfigModule.forRoot(),
   JwtModule.register({
-    secret: 'secret'
+    secret: process.env.JWT_SECRET
   })],
   providers: [CompanyService, JwtStrategy],
   controllers: [CompanyController],

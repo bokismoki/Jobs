@@ -8,7 +8,7 @@ import { CompanyModule } from './company/company.module';
 import { JobModule } from './job/job.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot(typeOrmConfig()), CompanyModule, JobModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRoot(typeOrmConfig()), CompanyModule, JobModule],
   controllers: [AppController],
   providers: [AppService],
 })

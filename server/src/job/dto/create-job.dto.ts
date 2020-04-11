@@ -2,7 +2,7 @@ import { IsString, MaxLength, Matches } from "class-validator"
 
 export class CreateJobDto {
     @IsString()
-    @MaxLength(35)
+    @MaxLength(50)
     title: string
 
     @IsString()
