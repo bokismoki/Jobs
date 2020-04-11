@@ -3,6 +3,10 @@
     class="contact-form mt-10 max-w-sm mx-auto lg:max-w-md xl:max-w-xl xl:mx-0 xl:ml-auto"
     @submit.prevent="sendMessage"
   >
+    <div
+      class="text-red-600 font-semibold"
+      v-if="hasErrors"
+    >Make sure all required fields are filled in correctly.</div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="contact-first-name">
         Tell us your name:
@@ -34,6 +38,10 @@
         placeholder="email"
         v-model="contact.email"
       />
+      <div
+        class="error text-xs text-red-600 font-semibold"
+        v-if="!$v.contact.email.email"
+      >Please enter a valid email</div>
     </div>
     <div class="mt-3">
       <label class="block mb-1 text-white text-sm font-semibold" for="contact-phone">Phone:</label>
@@ -65,6 +73,8 @@
 </template>
 
 <script>
+import { required, email } from 'vuelidate/lib/validators'
+
 export default {
   name: 'ContactForm',
   data() {
@@ -75,11 +85,67 @@ export default {
         phone: '',
         email: '',
         message: ''
+      },
+      hasErrors: false
+    }
+  },
+  validations: {
+    contact: {
+      firstName: {
+        required
+      },
+      lastName: {
+        required
+      },
+      email: {
+        required,
+        email
+      },
+      message: {
+        required
       }
     }
   },
   methods: {
-    sendMessage() {}
+    sendMessage() {
+      this.$v.contact.$touch()
+      if (this.$v.contact.$anyError) {
+        this.hasErrors = true
+      } else {
+        this.$axios
+          .post(
+            '/contact',
+            {
+              ...this.contact,
+              name: `${this.contact.firstName} ${this.contact.lastName}`
+            },
+            {
+              headers: {
+                'content-type': 'application/json'
+              }
+            }
+          )
+          .then(response => {
+            if (response.status === 200) {
+              console.log('Message successfuly sent')
+            }
+          })
+          .catch(err => {
+            console.error(err)
+            console.error(err.response)
+          })
+      }
+    }
+  },
+  watch: {
+    contact: {
+      deep: true,
+      handler() {
+        if (this.hasErrors) {
+          this.hasErrors = false
+        }
+      }
+    }
   }
 }
 </script>
