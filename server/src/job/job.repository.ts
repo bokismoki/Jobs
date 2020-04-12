@@ -16,7 +16,6 @@ export class JobRepository extends Repository<Job> {
             .where('job.approved = 0')
             .getMany()
         query.forEach(job => {
-            delete job.company.email
             delete job.company.password
             delete job.company.admin
         })

@@ -42,12 +42,12 @@ export class JobController {
     }
 
     @Patch(':id/approve')
-    async approveJob(@Param('id', ParseIntPipe) id: number): Promise<void> {
-        return this.jobService.approveJob(id)
+    async approveJob(@Param('id', ParseIntPipe) id: number, @Body() dataObj: { email: string }): Promise<void> {
+        return this.jobService.approveJob(id, dataObj.email)
     }
 
     @Delete(':id')
-    async deleteJob(@Param('id', ParseIntPipe) id: number): Promise<void> {
-        return this.jobService.deleteJob(id)
+    async deleteJob(@Param('id', ParseIntPipe) id: number, @Body() dataObj: { email: string }): Promise<void> {
+        return this.jobService.deleteJob(id, dataObj.email)
     }
 }
