@@ -11,7 +11,10 @@ import { ConfigModule } from '@nestjs/config';
   imports: [TypeOrmModule.forFeature([CompanyRepository]),
   ConfigModule.forRoot(),
   JwtModule.register({
-    secret: process.env.JWT_SECRET
+    secret: process.env.JWT_SECRET,
+    signOptions: {
+      expiresIn: '5h'
+    }
   })],
   providers: [CompanyService, JwtStrategy],
   controllers: [CompanyController],

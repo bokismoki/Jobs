@@ -172,7 +172,8 @@ export default {
         this.$axios
           .post('/job', fd, {
             headers: {
-              'content-type': 'multipart/form-data'
+              'content-type': 'multipart/form-data',
+              Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
             }
           })
           .then(async response => {

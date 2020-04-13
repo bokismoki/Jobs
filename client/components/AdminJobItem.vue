@@ -44,7 +44,8 @@ export default {
         { email: this.job.company.email },
         {
           headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
           }
         }
       )
@@ -56,6 +57,9 @@ export default {
       const response = await this.$axios.delete(`/job/${id}`, {
         data: {
           email: this.job.company.email
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
         }
       })
       if (response.status === 200) {

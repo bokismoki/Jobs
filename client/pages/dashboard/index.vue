@@ -37,7 +37,11 @@ export default {
     if (!store.getters.admin) {
       redirect({ name: 'index' })
     }
-    const jobs = await $axios.get('/job/admin')
+    const jobs = await $axios.get('/job/admin', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+      }
+    })
     return {
       jobs: jobs.data
     }
