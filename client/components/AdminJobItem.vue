@@ -39,31 +39,55 @@ export default {
   props: ['job', 'index'],
   methods: {
     async approve(id) {
-      const response = await this.$axios.patch(
-        `/job/${id}/approve`,
-        { email: this.job.company.email },
-        {
-          headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+      try {
+        const response = await this.$axios.patch(
+          `/job/${id}/approve`,
+          { email: this.job.company.email },
+          {
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+            }
           }
+        )
+        if (response.status === 200) {
+          this.$emit('approved', this.index)
+          this.$store.dispatch('setPopupMsg', {
+            success: true,
+            msg: 'Job post approved'
+          })
         }
-      )
-      if (response.status === 200) {
-        this.$emit('approved', this.index)
+      } catch (err) {
+        console.error(err)
+        this.$store.dispatch('setPopupMsg', {
+          success: false,
+          msg: 'Error while approving job post'
+        })
       }
     },
     async remove(id) {
-      const response = await this.$axios.delete(`/job/${id}`, {
-        data: {
-          email: this.job.company.email
-        },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+      try {
+        const response = await this.$axios.delete(`/job/${id}`, {
+          data: {
+            email: this.job.company.email
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+          }
+        })
+        if (response.status === 200) {
+          this.$emit('removed', this.index)
+          this.$store.dispatch('setPopupMsg', {
+            success: true,
+            msg: 'Job post removed'
+          })
         }
-      })
-      if (response.status === 200) {
-        this.$emit('removed', this.index)
+      } catch (err) {
+        console.error(err)
+        this.$store.dispatch('setPopupMsg', {
+          success: false,
+          msg: 'Error while removing job post'
+        })
       }
     }
   }

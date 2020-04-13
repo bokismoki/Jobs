@@ -1,7 +1,7 @@
 <template>
   <form class="signin-form mt-10 max-w-sm mx-auto lg:max-w-md xl:max-w-lg" @submit.prevent="login">
     <div
-      class="text-red-600"
+      class="text-red-600 font-semibold"
       v-if="hasErrors"
     >Make sure all required fields are filled in correctly.</div>
     <div class="mt-3">
@@ -66,33 +66,38 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$v.company.$touch()
-      if (this.$v.company.$anyError) {
-        this.hasErrors = true
-      } else {
-        this.$axios
-          .post('/company/login', this.company, {
-            headers: {
-              'content-type': 'application/json'
+    async login() {
+      try {
+        this.$v.company.$touch()
+        if (this.$v.company.$anyError) {
+          this.hasErrors = true
+        } else {
+          const response = await this.$axios.post(
+            '/company/login',
+            this.company,
+            {
+              headers: {
+                'content-type': 'application/json'
+              }
             }
-          })
-          .then(response => {
-            const { status, data } = response
-            if (status === 200) {
-              localStorage.setItem('jwtToken', data.jwtToken)
-              this.$store.dispatch('login', {
-                id: data.id,
-                admin: data.admin,
-                loggedIn: true
-              })
-              this.$router.push({ name: 'index' })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-            console.error(err.response)
-          })
+          )
+          const { status, data } = response
+          if (status === 200) {
+            localStorage.setItem('jwtToken', data.jwtToken)
+            this.$store.dispatch('login', {
+              id: data.id,
+              admin: data.admin,
+              loggedIn: true
+            })
+            this.$router.push({ name: 'index' })
+          }
+        }
+      } catch (err) {
+        console.error(err)
+        this.$store.dispatch('setPopupMsg', {
+          success: false,
+          msg: 'Error while signing in'
+        })
       }
     }
   },

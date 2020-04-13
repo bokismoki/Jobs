@@ -30,7 +30,8 @@ export default {
   */
   plugins: [
     { src: '~/plugins/vue-awesome-swiper', mode: 'client' },
-    { src: '~/plugins/vuelidate' }
+    { src: '~/plugins/vuelidate' },
+    { src: '~/plugins/axios' }
   ],
   /*
   ** Nuxt.js dev-modules

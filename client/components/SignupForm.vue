@@ -211,26 +211,35 @@ export default {
     }
   },
   methods: {
-    register() {
-      this.$v.company.$touch()
-      if (this.$v.company.$anyError) {
-        this.hasErrors = true
-      } else {
-        this.$axios
-          .post('/company/signup', this.company, {
-            headers: {
-              'content-type': 'application/json'
+    async register() {
+      try {
+        this.$v.company.$touch()
+        if (this.$v.company.$anyError) {
+          this.hasErrors = true
+        } else {
+          const response = await this.$axios.post(
+            '/company/signup',
+            this.company,
+            {
+              headers: {
+                'content-type': 'application/json'
+              }
             }
-          })
-          .then(response => {
-            if (response.status === 201) {
-              this.$router.push({ name: 'signin' })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-            console.error(err.response)
-          })
+          )
+          if (response.status === 201) {
+            this.$router.push({ name: 'signin' })
+            this.$store.dispatch('setPopupMsg', {
+              success: true,
+              msg: 'New company account successfully created'
+            })
+          }
+        }
+      } catch (err) {
+        console.error(err)
+        this.$store.dispatch('setPopupMsg', {
+          success: false,
+          msg: 'Error while signing up'
+        })
       }
     }
   },

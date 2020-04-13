@@ -107,13 +107,13 @@ export default {
     }
   },
   methods: {
-    sendMessage() {
-      this.$v.contact.$touch()
-      if (this.$v.contact.$anyError) {
-        this.hasErrors = true
-      } else {
-        this.$axios
-          .post(
+    async sendMessage() {
+      try {
+        this.$v.contact.$touch()
+        if (this.$v.contact.$anyError) {
+          this.hasErrors = true
+        } else {
+          const response = await this.$axios.post(
             '/contact',
             {
               ...this.contact,
@@ -125,15 +125,22 @@ export default {
               }
             }
           )
-          .then(response => {
-            if (response.status === 200) {
-              console.log('Message successfuly sent')
+          if (response.status === 200) {
+            for (let prop in this.contact) {
+              this.contact[prop] = ''
             }
-          })
-          .catch(err => {
-            console.error(err)
-            console.error(err.response)
-          })
+            this.$store.dispatch('setPopupMsg', {
+              success: true,
+              msg: 'The message has been sent'
+            })
+          }
+        }
+      } catch (err) {
+        console.error(err)
+        this.$store.dispatch('setPopupMsg', {
+          success: false,
+          msg: 'Error while sending message'
+        })
       }
     }
   },

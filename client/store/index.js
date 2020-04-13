@@ -6,7 +6,8 @@ export const state = () => ({
         loggedIn: false
     },
     jobs: [],
-    filter: ''
+    filter: '',
+    popupMsg: null
 })
 
 export const getters = {
@@ -22,7 +23,8 @@ export const getters = {
                 job.company.location.toLowerCase().includes(state.filter.toLowerCase()) ||
                 job.company.name.toLowerCase().includes(state.filter.toLowerCase())
         })
-    }
+    },
+    popupMsg: state => state.popupMsg
 }
 
 export const mutations = {
@@ -47,6 +49,9 @@ export const mutations = {
     },
     SET_FILTER: (state, payload) => {
         state.filter = payload
+    },
+    SET_POPUP_MSG: (state, payload) => {
+        state.popupMsg = payload
     }
 }
 
@@ -72,5 +77,11 @@ export const actions = {
     },
     setFilter: ({ commit }, payload) => {
         commit('SET_FILTER', payload)
+    },
+    setPopupMsg: ({ commit }, payload) => {
+        commit('SET_POPUP_MSG', payload)
+        setTimeout(() => {
+            commit('SET_POPUP_MSG', null)
+        }, 3000);
     }
 }

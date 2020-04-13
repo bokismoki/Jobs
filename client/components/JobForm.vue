@@ -158,33 +158,38 @@ export default {
     setImageFile(file) {
       this.job.image.file = file
     },
-    upload() {
-      this.$v.job.$touch()
-      if (this.$v.job.$anyError) {
-        this.hasErrors = true
-      } else {
-        const fd = new FormData()
-        fd.append('image', this.job.image.file, this.job.image.file.name)
-        fd.append('title', this.job.title)
-        fd.append('job_link', this.job.job_link)
-        fd.append('description', this.job.description)
-        fd.append('companyId', this.accountId)
-        this.$axios
-          .post('/job', fd, {
+    async upload() {
+      try {
+        this.$v.job.$touch()
+        if (this.$v.job.$anyError) {
+          this.hasErrors = true
+        } else {
+          const fd = new FormData()
+          fd.append('image', this.job.image.file, this.job.image.file.name)
+          fd.append('title', this.job.title)
+          fd.append('job_link', this.job.job_link)
+          fd.append('description', this.job.description)
+          fd.append('companyId', this.accountId)
+          const response = await this.$axios.post('/job', fd, {
             headers: {
               'content-type': 'multipart/form-data',
               Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
             }
           })
-          .then(async response => {
-            if (response.status === 201) {
-              this.$router.push({ name: 'jobs' })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-            console.error(err.response)
-          })
+          if (response.status === 201) {
+            this.$router.push({ name: 'jobs' })
+            this.$store.dispatch('setPopupMsg', {
+              success: true,
+              msg: 'New job post successfully created'
+            })
+          }
+        }
+      } catch (err) {
+        console.error(err)
+        this.$store.dispatch('setPopupMsg', {
+          success: false,
+          msg: 'Error while creating new job post'
+        })
       }
     }
   },

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PopupMsg v-if="popupMsg" :popupMsg="popupMsg" />
     <div class="flex flex-col md:flex-row">
       <Navigation />
       <div class="view">
@@ -20,10 +21,12 @@ export default {
     Navigation: () =>
       import(/*webpackChunkName: 'navigation'*/ '~/components/Navigation'),
     BurgerNav: () =>
-      import(/*webpackChunkName: 'burger-nav'*/ '~/components/BurgerNav')
+      import(/*webpackChunkName: 'burger-nav'*/ '~/components/BurgerNav'),
+    PopupMsg: () =>
+      import(/*webpackChunkName: 'popup-msg'*/ '~/components/PopupMsg')
   },
   computed: {
-    ...mapGetters(['burgerNavOpen'])
+    ...mapGetters(['burgerNavOpen', 'popupMsg'])
   }
 }
 </script>
