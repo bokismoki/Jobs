@@ -1,6 +1,6 @@
 <template>
   <div class="newest-jobs-preview mx-auto md:max-w-md lg:max-w-2xl">
-    <h2 class="text-white font-semibold uppercase mb-6 md:text-xl xl:text-3xl">Newest jobs added:</h2>
+    <h2 class="text-white font-semibold uppercase mb-6 md:text-xl md:leading-snug xl:leading-none xl:text-3xl">Newest jobs added:</h2>
     <template>
       <client-only class="placeholder-white" placeholder="Loading...">
         <swiper class="swiper w-full rounded shadow" :options="swiperOption">

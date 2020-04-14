@@ -12,7 +12,6 @@ module.exports = {
         'vblue': '#34495e'
       },
       spacing: {
-        '1.5': '0.35rem',
         '13': '3.25rem',
         '17': '4.25rem'
       },
@@ -20,7 +19,7 @@ module.exports = {
         'xxs': '16rem'
       },
       opacity: {
-        '85': '0.85'
+        '90': '0.90'
       }
     }
   },

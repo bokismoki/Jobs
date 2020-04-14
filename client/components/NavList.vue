@@ -36,7 +36,7 @@
       </li>
       <li
         v-if="loggedIn"
-        class="uppercase text-sm pl-8 mb-2 -mt-3 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200 md:-mt-6"
+        class="uppercase pl-8 mb-2 -mt-3 p-2 text-vblue rounded-sm font-semibold hover:bg-vgreen hover:text-white md:transition-colors md:duration-200 md:-mt-6"
         :class="{'bg-vgreen': $route.name === 'jobs-create'}"
       >
         <nuxt-link :to="{name: 'jobs-create'}" class="block">Create</nuxt-link>
@@ -48,7 +48,7 @@
         <nuxt-link :to="{name: 'contact'}" class="block">Contact</nuxt-link>
       </li>
     </div>
-    <li v-if="loggedIn" class="text-white md:ml-2">
+    <li v-if="loggedIn" class="text-white">
       <button @click="logout" class="uppercase bg-vblue py-2 rounded-sm w-full">Logout</button>
     </li>
   </ul>
@@ -64,6 +64,7 @@ export default {
       this.$store.dispatch('logout')
       this.$store.dispatch('setBurgerNavOpen', false)
       localStorage.removeItem('jwtToken')
+      this.$router.push({ name: 'index' })
     }
   },
   computed: {

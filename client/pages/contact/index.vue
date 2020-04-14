@@ -1,8 +1,8 @@
 <template>
-  <div class="contact px-5 py-10 sm:px-10 md:py-13 md:px-10">
+  <div class="contact px-5 py-10 sm:px-10 md:py-13">
     <div class="lg:max-w-md xl:max-w-xl mx-auto xl:text-center">
       <h1
-        class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl"
+        class="text-white uppercase tracking-wider font-semibold text-xl md:leading-snug xl:leading-none xl:text-3xl"
       >Send us a message</h1>
       <p class="text-white font-semibold text-sm mt-5 xl:text-base">
         <span class="text-vgreen">Contact</span> us if you have any suggestions or in any way want to help our work. You can expect our answer within 1 business day.
@@ -23,7 +23,7 @@
       </div>
       <div class="mt-10">
         <Letter fill="#41b883" class="w-8 h-8 mx-auto" />
-        <p>jobspool@gmail.com</p>
+        <p>jobs@gmail.com</p>
       </div>
       <div class="mt-10">
         <Phone fill="#41b883" class="w-8 h-8 mx-auto" />

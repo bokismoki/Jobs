@@ -1,18 +1,14 @@
 <template>
-  <nuxt-link :to="{name: 'index'}" class="logo flex items-end">
-    <Jhook class="w-8 h-8 md:w-10 md:h-10 xl:w-12 xl:h-12" fill="#fff" />
+  <nuxt-link :to="{name: 'index'}" class="logo md:px-2">
     <h1
-      class="text-white font-semibold text-2xl tracking-wide uppercase leading-none -ml-1.5 xl:text-3xl"
-    >obs Pool</h1>
+      class="text-white font-semibold text-2xl tracking-wide uppercase leading-none xl:text-3xl"
+    >&#x3c;/Jobs&#x3e;</h1>
   </nuxt-link>
 </template>
 
 <script>
 export default {
-  name: 'Logo',
-  components: {
-    Jhook: () => import(/*webpackChunkName: 'jhook'*/ '~/assets/img/J-hook.svg')
-  }
+  name: 'Logo'
 }
 </script>
 

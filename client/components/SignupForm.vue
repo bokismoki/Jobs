@@ -236,10 +236,17 @@ export default {
         }
       } catch (err) {
         console.error(err)
-        this.$store.dispatch('setPopupMsg', {
-          success: false,
-          msg: 'Error while signing up'
-        })
+        if (err.response.status === 409) {
+          this.$store.dispatch('setPopupMsg', {
+            success: false,
+            msg: err.response.data.message
+          })
+        } else {
+          this.$store.dispatch('setPopupMsg', {
+            success: false,
+            msg: 'Error while signing up'
+          })
+        }
       }
     }
   },

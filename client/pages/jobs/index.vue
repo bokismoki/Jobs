@@ -1,14 +1,14 @@
 <template>
-  <div class="jobs px-5 py-10 sm:px-10 md:py-13 md:px-10 leading-snug">
+  <div class="jobs px-5 py-10 sm:px-10 md:py-13 leading-snug">
     <h1
-      class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl xl:text-center"
+      class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl xl:leading-none xl:text-center"
     >Search for job offers</h1>
     <Filters class="mt-10" />
     <div class="dgrid mx-auto lg:grid lg:content-center lg:grid-cols-2 lg:mt-5">
       <JobItem v-for="job in filteredJobs" :key="job.id" :job="job" />
     </div>
     <button
-      class="bg-vgreen text-white px-5 py-2 rounded-sm mt-10 uppercase text-sm table mx-auto font-bold tracking-wider xl:text-lg"
+      class="bg-vgreen text-white px-5 py-2 rounded-sm mt-20 uppercase text-sm table mx-auto font-bold tracking-wider xl:text-lg"
       :class="{'opacity-75': nothingToLoad}"
       :disabled="nothingToLoad"
       @click="loadMore"
@@ -16,7 +16,7 @@
     <p
       class="text-white text-center mt-3 uppercase tracking-wide font-semibold transition-opacity duration-500"
       :class="{'opacity-0 cursor-default': !nothingToLoadP}"
-    >There are no jobs to be loaded</p>
+    >There are no more jobs to be loaded</p>
   </div>
 </template>
 

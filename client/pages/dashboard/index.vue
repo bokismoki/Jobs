@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard px-5 py-10 sm:px-10 md:py-13">
     <h1
-      class="text-white uppercase tracking-wider font-semibold leading-snug text-xl lg:text-center xl:text-3xl"
+      class="text-white uppercase tracking-wider font-semibold leading-snug text-xl lg:text-center xl:leading-none xl:text-3xl"
     >Admin Dashboard</h1>
     <div class="bg-white max-w-screen mt-10 py-5 -mx-5 px-5 sm:px-10 sm:-mx-10">
       <p v-if="jobs.length === 0" class="font-semibold">No jobs to be approved</p>

@@ -3,13 +3,17 @@
     :href="job.job_link"
     rel="noopener"
     target="_blank"
-    class="job-item-preview relative block h-full w-full flex bg-center bg-cover bg-no-repeat"
+    class="job-item-preview relative block h-full w-full bg-white flex bg-center bg-cover bg-no-repeat"
     :style="{'background-image': `url(http://localhost:8080/api/job/${job.image_path})`}"
   >
-    <div class="absolute w-full h-full bg-vblue opacity-85"></div>
-    <h1 class="absolute top-0 w-full text-white mt-3 uppercase text-center xl:text-xl">{{job.title}}</h1>
+    <div class="absolute w-full h-full bg-vblue opacity-90"></div>
+    <h1
+      class="absolute top-0 w-full text-white mt-3 px-2 uppercase text-center xl:text-xl"
+    >{{job.title}}</h1>
     <div class="relative m-auto px-3">
-      <p class="text-white text-xs font-semibold px-8 leading-tight sm:px-20 xl:text-sm">{{job.description}}</p>
+      <p
+        class="text-white text-xs font-semibold px-8 leading-tight sm:px-20 xl:text-sm"
+      >{{job.description}}</p>
     </div>
     <a
       :href="job.job_link"
