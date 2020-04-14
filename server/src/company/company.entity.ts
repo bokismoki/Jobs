@@ -28,6 +28,12 @@ export class Company extends BaseEntity {
     @Column({ default: false })
     admin: boolean
 
+    @Column({ default: false })
+    confirmed: boolean
+
+    @Column({ default: '' })
+    confirmation_token: string
+
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: string
 

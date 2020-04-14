@@ -1,4 +1,4 @@
-import { Controller, Post, Body, ValidationPipe, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, HttpCode, Get, Param } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { LoginDto } from './dto/login.dto';
@@ -6,6 +6,11 @@ import { LoginDto } from './dto/login.dto';
 @Controller('company')
 export class CompanyController {
     constructor(private companyService: CompanyService) { }
+
+    @Get('confirm/:token')
+    async confirmEmail(@Param('token') token: string): Promise<void> {
+        return this.companyService.confirmEmail(token)
+    }
 
     @Post('signup')
     async createCompany(@Body(ValidationPipe) createCompanyDto: CreateCompanyDto): Promise<void> {
