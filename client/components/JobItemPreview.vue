@@ -4,7 +4,7 @@
     rel="noopener"
     target="_blank"
     class="job-item-preview relative block h-full w-full bg-white flex bg-center bg-cover bg-no-repeat"
-    :style="{'background-image': `url(http://localhost:8080/api/job/${job.image_path})`}"
+    :style="{'background-image': `url(https://jobs-it-server.herokuapp.com/api/job/${job.image_path})`}"
   >
     <div class="absolute w-full h-full bg-vblue opacity-90"></div>
     <h1

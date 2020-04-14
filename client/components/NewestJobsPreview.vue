@@ -1,6 +1,8 @@
 <template>
   <div class="newest-jobs-preview mx-auto md:max-w-md lg:max-w-2xl">
-    <h2 class="text-white font-semibold uppercase mb-6 md:text-xl md:leading-snug xl:leading-none xl:text-3xl">Newest jobs added:</h2>
+    <h2
+      class="text-white font-semibold uppercase mb-6 md:text-xl md:leading-snug xl:leading-none xl:text-3xl"
+    >Newest jobs added:</h2>
     <template>
       <client-only class="placeholder-white" placeholder="Loading...">
         <swiper class="swiper w-full rounded shadow" :options="swiperOption">
@@ -69,8 +71,12 @@ export default {
 </style>
 
 <style>
+.swiper-pagination-progressbar {
+  @apply w-full absolute top-0 !important;
+  height: 5px;
+}
 .swiper-pagination-progressbar-fill {
-  @apply bg-vgreen !important;
+  @apply bg-vgreen h-full block !important;
 }
 .swiper-button-disabled {
   @apply opacity-25 !important;
@@ -80,5 +86,16 @@ export default {
 }
 .swiper-button-next {
   @apply text-vgreen !important;
+}
+.swiper-container-initialized {
+  @apply relative !important;
+}
+.swiper-wrapper {
+  height: 300px !important;
+}
+@media (min-width: 1280px) {
+  .swiper-wrapper {
+    height: 375px !important;
+  }
 }
 </style>

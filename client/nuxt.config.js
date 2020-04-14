@@ -54,7 +54,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://localhost:8080/api'
+    baseURL: 'https://jobs-it-server.herokuapp.com/api'
   },
 
   router: {

@@ -4,7 +4,7 @@
     <div class="flex items-start">
       <img
         class="w-1/3 rounded shadow mb-5 mr-2"
-        :src="`http://localhost:8080/api/job/${job.image_path}`"
+        :src="`https://jobs-it-server.herokuapp.com/api/job/${job.image_path}`"
         :alt="job.image_path"
       />
       <div class="w-2/3">

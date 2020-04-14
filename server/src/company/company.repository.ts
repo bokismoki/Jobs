@@ -39,7 +39,7 @@ export class CompanyRepository extends Repository<Company> {
                 to: company.email,
                 subject: '"</Jobs>" Account Activation',
                 html: `<h1 style="text-align: center">Click to activate account</h1>
-                       <a href="http://localhost:8080/api/company/confirm/${company.confirmation_token}" target="_blank" style="text-decoration: none, font-weight: black, text-transform: uppercase">Activate</a>`
+                       <a href="https://jobs-it-server.herokuapp.com/api/company/confirm/${company.confirmation_token}" target="_blank" style="text-decoration: none, font-weight: black, text-transform: uppercase">Activate</a>`
             }
 
             await transporter.sendMail(mailOptions)

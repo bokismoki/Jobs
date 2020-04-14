@@ -1,7 +1,7 @@
 <template>
   <div
     class="job-item relative rounded shadow bg-white overflow-hidden w-full mt-10 bg-center bg-cover bg-no-repeat max-w-sm mx-auto lg:max-w-md lg:m-5 lg:w-auto"
-    :style="{'background-image': `url(http://localhost:8080/api/job/${job.image_path})`}"
+    :style="{'background-image': `url(https://jobs-it-server.herokuapp.com/api/job/${job.image_path})`}"
   >
     <div class="absolute w-full h-full bg-vblue opacity-90"></div>
     <div class="relative w-full h-full flex flex-col justify-between pt-3">
