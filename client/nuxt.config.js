@@ -9,7 +9,13 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: 'If you are a company and you want to find employees as soon as possible then we are the right place for you. Create job offers and connect them with your company\'s site, your potential emloyee will easily hear about you and start applying for the job.' },
+      { hid: 'og:title', name: 'og:title', content: '</Jobs>' },
+      { hid: 'og:locale', name: 'og:locale', content: 'en_EU' },
+      { hid: 'og:url', name: 'og:url', content: 'https://jobs-it.herokuapp.com' },
+      { hid: 'og:type', name: 'og:type', content: 'website' },
+      { hid: 'og:image', name: 'og:image', content: 'https://images.pexels.com/photos/830891/pexels-photo-830891.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' },
+      { hid: 'og:description', name: 'og:description', content: 'If you are a company and you want to find employees as soon as possible then we are the right place for you. Create job offers and connect them with your company\'s site, your potential emloyee will easily hear about you and start applying for the job.' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
