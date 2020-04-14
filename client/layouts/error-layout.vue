@@ -1,6 +1,5 @@
 <template>
   <div class="error bg-vblue">
-    <Navbar />
     <div class="absolute w-full flex flex-col">
       <h1
         class="px-5 text-center text-white font-semibold text-xl sm:text-3xl"

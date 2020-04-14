@@ -90,7 +90,7 @@
       </label>
 
       <select class="p-1" id="comp-size" v-model="company.size">
-        <option value>N/A</option>
+        <option value="N/A">N/A</option>
         <option value="SM">SM (1-20)</option>
         <option value="MD">MD (21-100)</option>
         <option value="LG">LG (101+)</option>
@@ -230,7 +230,7 @@ export default {
             this.$router.push({ name: 'signin' })
             this.$store.dispatch('setPopupMsg', {
               success: true,
-              msg: 'New company account successfully created'
+              msg: 'Please activate your account through email link'
             })
           }
         }

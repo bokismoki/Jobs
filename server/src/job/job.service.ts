@@ -59,10 +59,10 @@ export class JobService {
         }))
 
         if (purpose === 'approval') {
-            var subject = '</Jobs> - Approved'
+            var subject = '"</Jobs>" - Approved'
             var text = 'Hello, your job post has been approved.'
         } else if (purpose === 'deletion') {
-            var subject = '</Jobs> - Not Approved'
+            var subject = '"</Jobs>" - Not Approved'
             var text = 'Hello, your job post has not been approved.'
         }
 

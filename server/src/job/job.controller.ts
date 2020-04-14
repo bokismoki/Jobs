@@ -45,12 +45,8 @@ export class JobController {
         fileFilter: imageFileFilter
     }))
     async createJob(
-        @GetCompany() company: Company,
         @UploadedFile() file,
         @Body(ValidationPipe) createJobDto: CreateJobDto): Promise<void> {
-        if (!company.admin) {
-            throw new UnauthorizedException('Invalid credentials')
-        }
         return this.jobService.createJob(file, createJobDto)
     }
 

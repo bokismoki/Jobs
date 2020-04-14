@@ -4,8 +4,17 @@
       class="text-white uppercase tracking-wider font-semibold text-xl xl:text-3xl xl:leading-none xl:text-center"
     >Search for job offers</h1>
     <Filters class="mt-10" />
-    <div class="dgrid mx-auto lg:grid lg:content-center lg:grid-cols-2 lg:mt-5">
-      <JobItem v-for="job in filteredJobs" :key="job.id" :job="job" />
+    <div
+      class="dgrid mx-auto lg:grid lg:content-center lg:grid-cols-2 lg:mt-5"
+      :class="{'xl:grid-cols-1': filteredJobs.length === 0}"
+    >
+      <p v-if="filteredJobs.length === 0" class="text-white font-semibold mt-5 xl:text-center">
+        There are no jobs.
+        <br />Make sure to login if you want to create one.
+      </p>
+      <template v-else>
+        <JobItem v-for="job in filteredJobs" :key="job.id" :job="job" />
+      </template>
     </div>
     <button
       class="bg-vgreen text-white px-5 py-2 rounded-sm mt-20 uppercase text-sm table mx-auto font-bold tracking-wider xl:text-lg"
