@@ -79,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+.jobs {
+  min-height: 80vh;
+}
+
 @media (min-width: 1024px) {
   .dgrid {
     max-width: 950px;

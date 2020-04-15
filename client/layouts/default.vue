@@ -5,6 +5,7 @@
       <Navigation />
       <div class="view">
         <nuxt />
+        <Footer />
       </div>
     </div>
     <transition name="slide">
@@ -23,7 +24,8 @@ export default {
     BurgerNav: () =>
       import(/*webpackChunkName: 'burger-nav'*/ '~/components/BurgerNav'),
     PopupMsg: () =>
-      import(/*webpackChunkName: 'popup-msg'*/ '~/components/PopupMsg')
+      import(/*webpackChunkName: 'popup-msg'*/ '~/components/PopupMsg'),
+    Footer: () => import(/*webpackChunkName: 'footer'*/ '~/components/Footer')
   },
   computed: {
     ...mapGetters(['burgerNavOpen', 'popupMsg'])

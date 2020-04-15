@@ -25,4 +25,7 @@ export default {
 </script>
 
 <style scoped>
+.signin {
+  min-height: 80vh;
+}
 </style>

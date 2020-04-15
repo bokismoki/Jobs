@@ -88,7 +88,7 @@ export default {
   @apply text-vgreen !important;
 }
 .swiper-container-initialized {
-  @apply relative !important;
+  @apply relative overflow-hidden !important;
 }
 .swiper-wrapper {
   height: 300px !important;

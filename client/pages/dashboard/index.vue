@@ -50,6 +50,10 @@ export default {
 </script>
 
 <style scoped>
+.dashboard {
+  min-height: 80vh;
+}
+
 .grid {
   max-width: 950px;
 }
