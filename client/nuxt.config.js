@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 export default {
   mode: 'universal',
   /*
@@ -6,6 +6,9 @@ export default {
   */
   head: {
     titleTemplate: '</Jobs> - %s',
+    htmlAttrs: {
+      lang: 'en'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -45,7 +48,8 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Nuxt.js modules
@@ -53,8 +57,20 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'nuxt-svg-loader'
+    'nuxt-svg-loader',
+    '@nuxtjs/recaptcha'
   ],
+
+  /*
+  ** Google Recaptcha
+  */
+  recaptcha: {
+    size: 'normal',
+    version: 2,
+    siteKey: process.env.RECAPTCHA_SITE_KEY,
+    language: 'v2',
+    hideBadge: false
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

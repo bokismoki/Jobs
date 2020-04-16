@@ -30,6 +30,12 @@
         v-model="company.password"
       />
     </div>
+    <recaptcha
+      class="mt-5"
+      @error="recaptchaError"
+      @success="recaptchaSuccess"
+      @expired="recaptchaExpired"
+    />
     <button
       class="bg-vgreen text-white px-5 py-2 rounded-sm mt-5 uppercase text-sm font-bold tracking-wider"
       type="submit"
@@ -52,7 +58,8 @@ export default {
         email: '',
         password: ''
       },
-      hasErrors: false
+      hasErrors: false,
+      recaptcha: false
     }
   },
   validations: {
@@ -72,24 +79,31 @@ export default {
         if (this.$v.company.$anyError) {
           this.hasErrors = true
         } else {
-          const response = await this.$axios.post(
-            '/company/login',
-            this.company,
-            {
-              headers: {
-                'content-type': 'application/json'
+          if (this.recaptcha) {
+            const response = await this.$axios.post(
+              '/company/login',
+              this.company,
+              {
+                headers: {
+                  'content-type': 'application/json'
+                }
               }
+            )
+            const { status, data } = response
+            if (status === 200) {
+              localStorage.setItem('jwtToken', data.jwtToken)
+              this.$store.dispatch('login', {
+                id: data.id,
+                admin: data.admin,
+                loggedIn: true
+              })
+              this.$router.push({ name: 'index' })
             }
-          )
-          const { status, data } = response
-          if (status === 200) {
-            localStorage.setItem('jwtToken', data.jwtToken)
-            this.$store.dispatch('login', {
-              id: data.id,
-              admin: data.admin,
-              loggedIn: true
+          } else {
+            this.$store.dispatch('setPopupMsg', {
+              success: false,
+              msg: 'Recaptcha did not succeed, try again'
             })
-            this.$router.push({ name: 'index' })
           }
         }
       } catch (err) {
@@ -99,6 +113,30 @@ export default {
           msg: 'Error while signing in'
         })
       }
+    },
+    recaptchaError(error) {
+      console.error('Recaptcha Erorr:', error)
+      this.recaptcha = false
+    },
+    async recaptchaSuccess(token) {
+      try {
+        const response = await this.$axios.post(
+          '/company/recaptcha',
+          { token },
+          {
+            headers: {
+              'content-type': 'application/json'
+            }
+          }
+        )
+        this.recaptcha = response.data.success
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    recaptchaExpired() {
+      console.error('Recaptcha Expired')
+      this.recaptcha = false
     }
   },
   watch: {

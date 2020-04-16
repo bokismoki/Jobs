@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, HttpService } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyRepository } from './company.repository';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -11,7 +11,8 @@ export class CompanyService {
     constructor(
         @InjectRepository(CompanyRepository)
         private companyRepository: CompanyRepository,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private httpService: HttpService
     ) { }
 
     async confirmEmail(token: string): Promise<void> {
@@ -35,5 +36,16 @@ export class CompanyService {
         const jwtToken = this.jwtService.sign(payload)
 
         return { jwtToken, id, admin }
+    }
+
+    async verifyRecaptcha(token: string): Promise<{ success: boolean }> {
+        const response = await this.httpService.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${token}`, null, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).toPromise()
+        return {
+            success: response.data.success
+        }
     }
 }

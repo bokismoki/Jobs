@@ -23,4 +23,9 @@ export class CompanyController {
     async login(@Body(ValidationPipe) loginDto: LoginDto): Promise<{ jwtToken: string, id: number, admin: boolean }> {
         return this.companyService.login(loginDto)
     }
+
+    @Post('recaptcha')
+    async verifyRecaptcha(@Body('token') token: string): Promise<{ success: boolean }> {
+        return this.companyService.verifyRecaptcha(token)
+    }
 }
