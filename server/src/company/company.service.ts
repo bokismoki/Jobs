@@ -48,4 +48,8 @@ export class CompanyService {
             success: response.data.success
         }
     }
+
+    async deleteCompany(id: number): Promise<void> {
+        await this.companyRepository.delete({ id })
+    }
 }
