@@ -1,7 +1,7 @@
 <template>
   <div
     class="job-item relative rounded shadow bg-white overflow-hidden w-full mt-10 bg-center bg-cover bg-no-repeat max-w-sm mx-auto lg:max-w-md lg:m-5 lg:w-auto"
-    :style="{'background-image': `url(https://jobs-it-server.herokuapp.com/api/job/${job.image_path})`}"
+    :style="{'background-image': `url(${randomDefaultBgImage})`}"
   >
     <div class="absolute w-full h-full bg-vblue opacity-90"></div>
     <div class="relative w-full h-full flex flex-col justify-between pt-3">
@@ -47,7 +47,13 @@ export default {
   },
   data() {
     return {
-      companyDetailsOn: false
+      companyDetailsOn: false,
+      defaultBgImages: [
+        require('~/assets/img/default-job-bg-1.jpg'),
+        require('~/assets/img/default-job-bg-2.jpg'),
+        require('~/assets/img/default-job-bg-3.jpg'),
+        require('~/assets/img/default-job-bg-4.jpg')
+      ]
     }
   },
   methods: {
@@ -56,6 +62,11 @@ export default {
     },
     hideCompanyDetails() {
       this.toggleCompanyDetails()
+    }
+  },
+  computed: {
+    randomDefaultBgImage() {
+      return this.defaultBgImages[Math.floor(Math.random() * 4)]
     }
   }
 }

@@ -4,7 +4,7 @@
     rel="noopener"
     target="_blank"
     class="job-item-preview relative block h-full w-full bg-white flex bg-center bg-cover bg-no-repeat"
-    :style="{'background-image': `url(https://jobs-it-server.herokuapp.com/api/job/${job.image_path})`}"
+    :style="{'background-image': `url(${randomDefaultBgImage})`}"
   >
     <div class="absolute w-full h-full bg-vblue opacity-90"></div>
     <h1
@@ -27,7 +27,22 @@
 <script>
 export default {
   name: 'JobItemPreview',
-  props: ['job']
+  props: ['job'],
+  data() {
+    return {
+      defaultBgImages: [
+        require('~/assets/img/default-job-bg-1.jpg'),
+        require('~/assets/img/default-job-bg-2.jpg'),
+        require('~/assets/img/default-job-bg-3.jpg'),
+        require('~/assets/img/default-job-bg-4.jpg')
+      ]
+    }
+  },
+  computed: {
+    randomDefaultBgImage() {
+      return this.defaultBgImages[Math.floor(Math.random() * 4)]
+    }
+  }
 }
 </script>
 
