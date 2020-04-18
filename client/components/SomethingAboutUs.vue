@@ -30,6 +30,15 @@
           </div>
         </div>
       </div>
+      <div class="mt-10">
+        <h2 class="font-semibold uppercase pl-5 xl:text-lg">Our mission:</h2>
+        <p
+          class="text-xs font-semibold leading-tight mt-6 xl:text-sm"
+        >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quaerat labore delectus? Alias placeat, mollitia, quam atque ipsam a quae tenetur fuga, dicta necessitatibus consequatur debitis omnis? Ipsam, nulla sed, cupiditate facilis, eaque id sunt modi dolore commodi neque mollitia.</p>
+        <p
+          class="text-xs font-semibold leading-tight mt-6 xl:text-sm"
+        >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste quaerat labore delectus? Alias placeat, mollitia, quam atque ipsam a quae tenetur fuga, dicta necessitatibus consequatur debitis omnis?</p>
+      </div>
     </div>
   </section>
 </template>

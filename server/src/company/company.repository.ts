@@ -26,23 +26,6 @@ export class CompanyRepository extends Repository<Company> {
 
         try {
             await company.save()
-
-            const transporter = nodemailer.createTransport(mailGun({
-                auth: {
-                    api_key: process.env.MAIL_API_KEY,
-                    domain: process.env.MAIL_DOMAIN
-                }
-            }))
-
-            const mailOptions = {
-                from: 'borisbosnjak084@gmail.com',
-                to: company.email,
-                subject: '"</Jobs>" Account Activation',
-                html: `<h1 style="text-align: center">Click to activate account</h1>
-                       <a href="https://jobs-it-server.herokuapp.com/api/company/confirm/${company.confirmation_token}" target="_blank" style="text-decoration: none, font-weight: black, text-transform: uppercase">Activate</a>`
-            }
-
-            await transporter.sendMail(mailOptions)
         } catch (err) {
             if (err.sqlState === '23000') {
                 throw new ConflictException('There is a company registered with your email already')
@@ -50,6 +33,23 @@ export class CompanyRepository extends Repository<Company> {
                 throw new InternalServerErrorException('Error while registering a new account')
             }
         }
+
+        const transporter = nodemailer.createTransport(mailGun({
+            auth: {
+                api_key: process.env.MAIL_API_KEY,
+                domain: process.env.MAIL_DOMAIN
+            }
+        }))
+
+        const mailOptions = {
+            from: 'borisbosnjak084@gmail.com',
+            to: company.email,
+            subject: '"</Jobs>" Account Activation',
+            html: `<h1 style="text-align: center">Click to activate account</h1>
+                       <a href="https://jobs-it-server.herokuapp.com/api/company/confirm/${company.confirmation_token}" target="_blank" style="text-decoration: none, font-weight: black, text-transform: uppercase">Activate</a>`
+        }
+
+        await transporter.sendMail(mailOptions)
     }
 
     async validateCompanyPassword(loginDto: LoginDto): Promise<{ id: number, admin: boolean }> {

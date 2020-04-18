@@ -1,6 +1,6 @@
 <template>
   <div
-    class="company-details absolute bg-white -mt-3 right-0 bottom-0 overflow-hidden transition-all duration-300 flex items-center rounded"
+    class="company-details absolute bg-white -mt-3 right-0 bottom-0 overflow-hidden transition-all duration-300 flex items-center rounded-sm"
     :class="{'w-0 h-0 opacity-0': !companyDetailsOn, 'w-full h-full opacity-100': companyDetailsOn}"
     :style="{'background-image': `url(${companyDetailsBg})`}"
   >

@@ -22,7 +22,7 @@
       </form>
     </div>
     <div class="bg-white max-w-screen mt-10 py-5 -mx-5 px-5 sm:px-10 sm:-mx-10">
-      <p v-if="jobs.length === 0" class="font-semibold">No jobs to be approved</p>
+      <p v-if="jobs.length === 0" class="font-semibold text-vblue">No jobs to be approved</p>
       <div v-else class="grid xl:grid-cols-2 xl:mx-auto">
         <AdminJobItem
           :job="job"
@@ -71,11 +71,18 @@ export default {
         }
       } catch (err) {
         console.error(err)
+        if (err.response.data.statusCode === 404) {
+          this.$store.dispatch('setPopupMsg', {
+            success: false,
+            msg: err.response.data.message
+          })
+        } else {
+          this.$store.dispatch('setPopupMsg', {
+            success: false,
+            msg: 'Error while deleting company account'
+          })
+        }
         this.id = ''
-        this.$store.dispatch('setPopupMsg', {
-          success: false,
-          msg: 'Error while deleting company account'
-        })
       }
     }
   },

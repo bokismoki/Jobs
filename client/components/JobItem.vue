@@ -1,6 +1,6 @@
 <template>
   <div
-    class="job-item relative rounded shadow bg-white overflow-hidden w-full mt-10 bg-center bg-cover bg-no-repeat max-w-sm mx-auto lg:max-w-md lg:m-5 lg:w-auto"
+    class="job-item relative rounded shadow border-2 border-vgreen overflow-hidden bg-white w-full mt-10 bg-center bg-cover bg-no-repeat max-w-sm mx-auto lg:max-w-md lg:m-5 lg:w-auto"
     :style="{'background-image': `url(${randomDefaultBgImage})`}"
   >
     <div class="absolute w-full h-full bg-vblue opacity-90"></div>
@@ -16,7 +16,7 @@
         class="text-white py-3 rounded-b-sm text-sm text-center font-bold uppercase bg-vgreen xl:text-lg xl:py-3"
       >See job post</a>
       <div
-        class="absolute bottom-0 mb-10 left-0 bg-vgreen text-xs capitalize text-white font-bold px-2 py-1 rounded-t"
+        class="absolute bottom-0 mb-10 left-0 bg-vgreen text-xs capitalize text-white font-bold px-2 py-1 rounded-tr"
       >{{$moment(job.created_at).fromNow()}}</div>
       <div
         class="absolute bottom-0 right-0 w-16 h-16 pt-3 pl-3 flex bg-white rounded-tl-full cursor-pointer transition-colors duration-200 hover:bg-gray-300"

@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, HttpService } from '@nestjs/common';
+import { Injectable, BadRequestException, HttpService, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyRepository } from './company.repository';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -50,6 +50,9 @@ export class CompanyService {
     }
 
     async deleteCompany(id: number): Promise<void> {
-        await this.companyRepository.delete({ id })
+        const deletedCompany = await this.companyRepository.delete({ id })
+        if (!deletedCompany.affected) {
+            throw new NotFoundException('No company with this ID')
+        }
     }
 }
