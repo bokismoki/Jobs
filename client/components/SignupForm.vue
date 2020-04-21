@@ -134,6 +134,14 @@
         v-if="!$v.company.confirmPassword.sameAsPassword && company.confirmPassword"
       >Passwords do not match</div>
     </div>
+    <input class="hidden" type="file" id="file" @change="processFile" />
+    <label
+      class="bg-vgreen text-white rounded-sm font-semibold px-2 py-1 mt-5 text-xs inline-block uppercase"
+      for="file"
+    >Select image</label>
+    <span class="text-vgreen font-black">*</span>
+    <ImportantMessage msg="Select an image that represents your company. E.g company's logo." />
+    <img :src="company.image.src" v-if="company.image.src" class="w-full max-w-xs rounded mt-2" />
     <button
       class="bg-vgreen text-white px-5 py-2 rounded-sm mt-5 uppercase text-sm font-bold tracking-wider"
       type="submit"
@@ -162,9 +170,20 @@ const strongPassword = helpers.regex(
 
 export default {
   name: 'SignupForm',
+  components: {
+    ImportantMessage: () =>
+      import(
+        /*webpackChunkName: 'important-message'*/ '~/components/ImportantMessage'
+      )
+  },
   data() {
     return {
       company: {
+        image: {
+          src: '',
+          file: null,
+          name: ''
+        },
         name: '',
         email: '',
         site: '',
@@ -207,25 +226,60 @@ export default {
       confirmPassword: {
         required,
         sameAsPassword: sameAs('password')
+      },
+      image: {
+        src: {
+          required
+        }
       }
     }
   },
   methods: {
+    processFile(e) {
+      this.setImageFile(e.target.files[0])
+      const file = e.target.files[0]
+      this.fileRead(file)
+    },
+    fileRead(file) {
+      const reader = new FileReader()
+
+      reader.addEventListener('load', () => {
+        this.company.image.src = reader.result
+      })
+
+      if (file.type.includes('image')) {
+        reader.readAsDataURL(file)
+        this.company.image.name = file.name
+      } else {
+        this.company.image.src = ''
+      }
+    },
+    setImageFile(file) {
+      this.company.image.file = file
+    },
     async register() {
       try {
         this.$v.company.$touch()
         if (this.$v.company.$anyError) {
           this.hasErrors = true
         } else {
-          const response = await this.$axios.post(
-            '/company/signup',
-            this.company,
-            {
-              headers: {
-                'content-type': 'application/json'
-              }
-            }
+          const fd = new FormData()
+          fd.append(
+            'image',
+            this.company.image.file,
+            this.company.image.file.name
           )
+          fd.append('name', this.company.name)
+          fd.append('email', this.company.email)
+          fd.append('site', this.company.site)
+          fd.append('location', this.company.location)
+          fd.append('size', this.company.size)
+          fd.append('password', this.company.password)
+          const response = await this.$axios.post('/company/signup', fd, {
+            headers: {
+              'content-type': 'multipart/form-data'
+            }
+          })
           if (response.status === 201) {
             this.$router.push({ name: 'signin' })
             this.$store.dispatch('setPopupMsg', {

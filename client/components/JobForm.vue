@@ -67,14 +67,6 @@
         v-if="!$v.job.description.maxLength"
       >Maximum characters allowed: {{$v.job.description.$params.maxLength.max}}</div>
     </div>
-    <input class="hidden" type="file" id="file" @change="processFile" />
-    <label
-      class="bg-vgreen text-white rounded px-2 py-1 mt-5 inline-block uppercase"
-      for="file"
-    >Select image</label>
-    <span class="text-vgreen font-black">*</span>
-    <ImportantMessage msg="Select an image that represents your company. E.g company's logo." />
-    <img :src="job.image.src" v-if="job.image.src" class="w-full max-w-xs rounded mt-2" />
     <ImportantMessage
       class="mt-5"
       msg="After successful creation, there is still 1 step left before your potential employee can see this post - the admin approval. After admin approves your post, it will automatically be uploaded to our site and you will get an email confirmation that everything went well."
@@ -101,11 +93,6 @@ export default {
   data() {
     return {
       job: {
-        image: {
-          src: '',
-          file: null,
-          name: ''
-        },
         title: '',
         job_link: '',
         description: ''
@@ -127,55 +114,26 @@ export default {
       description: {
         required,
         maxLength: 255
-      },
-      image: {
-        src: {
-          required
-        }
       }
     }
   },
   methods: {
-    processFile(e) {
-      this.setImageFile(e.target.files[0])
-      const file = e.target.files[0]
-      this.fileRead(file)
-    },
-    fileRead(file) {
-      const reader = new FileReader()
-
-      reader.addEventListener('load', () => {
-        this.job.image.src = reader.result
-      })
-
-      if (file.type.includes('image')) {
-        reader.readAsDataURL(file)
-        this.job.image.name = file.name
-      } else {
-        this.job.image.src = ''
-      }
-    },
-    setImageFile(file) {
-      this.job.image.file = file
-    },
     async upload() {
       try {
         this.$v.job.$touch()
         if (this.$v.job.$anyError) {
           this.hasErrors = true
         } else {
-          const fd = new FormData()
-          fd.append('image', this.job.image.file, this.job.image.file.name)
-          fd.append('title', this.job.title)
-          fd.append('job_link', this.job.job_link)
-          fd.append('description', this.job.description)
-          fd.append('companyId', this.accountId)
-          const response = await this.$axios.post('/job', fd, {
-            headers: {
-              'content-type': 'multipart/form-data',
-              Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+          const response = await this.$axios.post(
+            '/job',
+            { ...this.job, companyId: this.accountId },
+            {
+              headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+              }
             }
-          })
+          )
           if (response.status === 201) {
             this.$router.push({ name: 'jobs' })
             this.$store.dispatch('setPopupMsg', {

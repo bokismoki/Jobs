@@ -1,9 +1,7 @@
 import { Controller, Get, Param, Post, Res, UseInterceptors, UploadedFile, Body, ValidationPipe, Delete, ParseIntPipe, Patch, Query, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express'
-import { diskStorage } from 'multer'
 import { JobService } from './job.service';
 import { Job } from './job.entity';
-import { editFileName, imageFileFilter } from 'src/utils/image-uploading.utils';
 import { CreateJobDto } from './dto/create-job.dto';
 import { GetJobsPaginationDto } from './dto/get-jobs-pagination.dto'
 import { AuthGuard } from '@nestjs/passport';
@@ -37,17 +35,9 @@ export class JobController {
 
     @Post()
     @UseGuards(AuthGuard('jwt'))
-    @UseInterceptors(FileInterceptor('image', {
-        storage: diskStorage({
-            destination: './files',
-            filename: editFileName
-        }),
-        fileFilter: imageFileFilter
-    }))
     async createJob(
-        @UploadedFile() file,
         @Body(ValidationPipe) createJobDto: CreateJobDto): Promise<void> {
-        return this.jobService.createJob(file, createJobDto)
+        return this.jobService.createJob(createJobDto)
     }
 
     @Patch(':id/approve')

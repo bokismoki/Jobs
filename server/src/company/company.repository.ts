@@ -10,18 +10,17 @@ import { LoginDto } from "./dto/login.dto"
 
 @EntityRepository(Company)
 export class CompanyRepository extends Repository<Company> {
-    async createCompany(createCompanyDto: CreateCompanyDto): Promise<void> {
+    async createCompany(createCompanyDto: CreateCompanyDto, file: any): Promise<void> {
         const { name, email, site, location, size, password } = createCompanyDto
 
         const company = new Company()
         company.name = name
         company.email = email
         company.site = site
+        company.size = size
         company.location = location
         company.confirmation_token = uuidv4()
-        if (size) {
-            company.size = size
-        }
+        company.image_path = file.filename
         company.password = await this.createHash(password)
 
         try {
@@ -46,7 +45,7 @@ export class CompanyRepository extends Repository<Company> {
             to: company.email,
             subject: '"</Jobs>" Account Activation',
             html: `<h1 style="text-align: center">Click to activate account</h1>
-                       <a href="https://jobs-it-server.herokuapp.com/api/company/confirm/${company.confirmation_token}" target="_blank" style="text-decoration: none, font-weight: black, text-transform: uppercase">Activate</a>`
+                       <a href="http://localhost:8080/api/company/confirm/${company.confirmation_token}" target="_blank" style="text-decoration: none, font-weight: black, text-transform: uppercase">Activate</a>`
         }
 
         await transporter.sendMail(mailOptions)
@@ -56,7 +55,7 @@ export class CompanyRepository extends Repository<Company> {
         const { email, password } = loginDto
         const company = await this.findOne({ email })
 
-        if (!company.confirmed) {
+        if (company && !company.confirmed) {
             throw new ForbiddenException('Please confirm your email to login')
         }
 
@@ -67,7 +66,7 @@ export class CompanyRepository extends Repository<Company> {
         }
     }
 
-    private async createHash(password) {
+    private async createHash(password: string) {
         return await bcrypt.hash(password, 10)
     }
 }

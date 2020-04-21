@@ -10,12 +10,9 @@ export class Job extends BaseEntity {
     title: string
 
     @Column()
-    image_path: string
-
-    @Column()
     job_link: string
 
-    @Column({ default: 'No additional description provided' })
+    @Column()
     description: string
 
     @Column({ default: false })

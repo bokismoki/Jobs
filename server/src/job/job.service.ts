@@ -28,8 +28,8 @@ export class JobService {
         return await this.jobRepository.findOne({ id })
     }
 
-    async createJob(file, createJobDto: CreateJobDto): Promise<void> {
-        return this.jobRepository.createJob(file, createJobDto)
+    async createJob(createJobDto: CreateJobDto): Promise<void> {
+        return this.jobRepository.createJob(createJobDto)
     }
 
     async approveJob(id: number, email: string): Promise<void> {

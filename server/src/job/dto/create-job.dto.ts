@@ -1,4 +1,4 @@
-import { IsString, MaxLength, Matches, IsNotEmpty } from "class-validator"
+import { IsString, MaxLength, Matches, IsNotEmpty, IsNumber } from "class-validator"
 
 export class CreateJobDto {
     @IsString()
@@ -18,7 +18,7 @@ export class CreateJobDto {
     @IsNotEmpty()
     description: string
 
-    @IsString()
+    @IsNumber()
     @IsNotEmpty()
     companyId: number
 }

@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getRepository, getManager, getConnection } from "typeorm"
+import { EntityRepository, Repository, getRepository, getManager } from "typeorm"
 import { Job } from "./job.entity"
 import { CreateJobDto } from "./dto/create-job.dto"
 import { Company } from "src/company/company.entity"
@@ -44,13 +44,12 @@ export class JobRepository extends Repository<Job> {
         return query
     }
 
-    async createJob(file, createJobDto: CreateJobDto): Promise<void> {
+    async createJob(createJobDto: CreateJobDto): Promise<void> {
         const { title, job_link, description, companyId } = createJobDto
         const job = new Job()
         job.title = title
         job.job_link = job_link
         job.description = description
-        job.image_path = file.filename
 
         const entityManager = getManager()
 

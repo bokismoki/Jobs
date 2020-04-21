@@ -19,11 +19,14 @@ export class Company extends BaseEntity {
     @Column({ length: 25 })
     location: string
 
-    @Column({ length: 3, default: 'N/A' })
+    @Column({ length: 3 })
     size: string
 
     @Column()
     password: string
+
+    @Column()
+    image_path: string
 
     @Column({ default: false })
     admin: boolean

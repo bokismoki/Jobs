@@ -25,8 +25,8 @@ export class CompanyService {
         }
     }
 
-    async createCompany(createCompanyDto: CreateCompanyDto): Promise<void> {
-        return this.companyRepository.createCompany(createCompanyDto)
+    async createCompany(createCompanyDto: CreateCompanyDto, file: any): Promise<void> {
+        return this.companyRepository.createCompany(createCompanyDto, file)
     }
 
     async login(loginDto: LoginDto): Promise<{ jwtToken: string, id: number, admin: boolean }> {

@@ -1,10 +1,13 @@
-import { Controller, Post, Body, ValidationPipe, HttpCode, Get, Param, Redirect, Delete, ParseIntPipe, UseGuards, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, HttpCode, Get, Param, Redirect, Delete, ParseIntPipe, UseGuards, UnauthorizedException, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetCompany } from './get-company.decorator';
 import { Company } from './company.entity';
+import { editFileName, imageFileFilter } from 'src/utils/image-uploading.utils';
+import { diskStorage } from 'multer'
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('company')
 export class CompanyController {
@@ -17,8 +20,18 @@ export class CompanyController {
     }
 
     @Post('signup')
-    async createCompany(@Body(ValidationPipe) createCompanyDto: CreateCompanyDto): Promise<void> {
-        return this.companyService.createCompany(createCompanyDto)
+    @UseInterceptors(FileInterceptor('image', {
+        storage: diskStorage({
+            destination: './files',
+            filename: editFileName
+        }),
+        fileFilter: imageFileFilter
+    }))
+    async createCompany(
+        @Body(ValidationPipe) createCompanyDto: CreateCompanyDto,
+        @UploadedFile() file: any
+    ): Promise<void> {
+        return this.companyService.createCompany(createCompanyDto, file)
     }
 
     @Post('login')
