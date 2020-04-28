@@ -1,4 +1,4 @@
-import { Controller, Post, Body, ValidationPipe, HttpCode, Get, Param, Redirect, Delete, ParseIntPipe, UseGuards, UnauthorizedException, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, HttpCode, Get, Param, Redirect, UnauthorizedException, UseInterceptors, UploadedFile, Req, Delete, UseGuards, ParseIntPipe, UnsupportedMediaTypeException, InternalServerErrorException } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { LoginDto } from './dto/login.dto';
@@ -25,12 +25,25 @@ export class CompanyController {
             destination: './files',
             filename: editFileName
         }),
-        fileFilter: imageFileFilter
+        fileFilter: imageFileFilter,
+        limits: {
+            files: 1,
+            fieldSize: 1024 * 1024 * 2
+        }
     }))
     async createCompany(
         @Body(ValidationPipe) createCompanyDto: CreateCompanyDto,
-        @UploadedFile() file: any
+        @UploadedFile() file: any,
+        @Req() req
     ): Promise<void> {
+        if(!file) {
+            throw new InternalServerErrorException(req.imageFileFilterException)
+        }
+
+        if (req.imageFileFilterException) {
+            throw new UnsupportedMediaTypeException(req.imageFileFilterException)
+        }
+
         return this.companyService.createCompany(createCompanyDto, file)
     }
 
