@@ -17,7 +17,7 @@
     "@nuxtjs/recaptcha": "^0.6.2",
     "nuxt": "^2.0.0",
     "nuxt-svg-loader": "^1.2.0",
-    "swiper": "^5.3.6",
+    "swiper": "^6.5.1",
     "vue-awesome-swiper": "^4.1.0",
     "vuelidate": "^0.7.5"
   },
